@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: micronaut-alibaba-nacos-test
+    instance:
+      id: ${random.shortuuid}
+nacos:
+  client:
+    enabled: true
+    host: localhost
