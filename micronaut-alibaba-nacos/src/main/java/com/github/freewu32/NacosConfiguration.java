@@ -11,7 +11,6 @@ import io.micronaut.discovery.registration.RegistrationConfiguration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * nacos配置属性

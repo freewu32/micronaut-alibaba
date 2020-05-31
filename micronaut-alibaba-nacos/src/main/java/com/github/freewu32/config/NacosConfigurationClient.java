@@ -2,6 +2,7 @@ package com.github.freewu32.config;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import com.github.freewu32.NacosConfiguration;
+import com.github.freewu32.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.*;
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * nacos配置加载客户端
  */
 @Singleton
-@RequiresConsul
+@RequiresNacos
 @Requires(beans = ConfigService.class)
 @Requires(property = ConfigurationClient.ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.FALSE)
 @BootstrapContextCompatible
@@ -35,12 +36,13 @@ public class NacosConfigurationClient implements ConfigurationClient {
 
     private NacosConfiguration.NacosConfigDiscoveryConfiguration discoveryConfiguration;
 
-    @Inject
     private ConfigService configService;
 
     public NacosConfigurationClient(NacosConfiguration configuration,
-                                    Environment environment) {
+                                    Environment environment,
+                                    ConfigService configService) {
         this.discoveryConfiguration = configuration.getConfiguration();
+        this.configService = configService;
 
         //处理配置加载器
         Collection<PropertySourceLoader> loaders = environment.getPropertySourceLoaders();
@@ -59,21 +61,14 @@ public class NacosConfigurationClient implements ConfigurationClient {
             String properties = configService.getConfig(discoveryConfiguration.getDataId(),
                     discoveryConfiguration.getGroup(), discoveryConfiguration
                             .getGetConfigTimeout());
-
+            //获取文件类型
             String type = discoveryConfiguration.getType();
-
-            switch (type) {
-                case "json":
-                case "yaml":
-                case "properties":
-                    PropertySourceLoader propertySourceLoader = resolveLoader(type);
-                    Map<String, Object> m = propertySourceLoader.read(discoveryConfiguration.getDataId(),
-                            properties.getBytes());
-                    return new MapPropertySource(discoveryConfiguration.getDataId(),
-                            m);
-                default:
-                    throw new RuntimeException("not support type" + type);
-            }
+            //解析数据
+            PropertySourceLoader propertySourceLoader = resolveLoader(type);
+            Map<String, Object> m = propertySourceLoader.read(discoveryConfiguration.getDataId(),
+                    properties.getBytes());
+            return new MapPropertySource(NacosConfiguration.ID + "-" + discoveryConfiguration.getDataId(),
+                    m);
         });
     }
 
@@ -92,10 +87,10 @@ public class NacosConfigurationClient implements ConfigurationClient {
                 case "yaml":
                     return new YamlPropertySourceLoader();
                 default:
-                    // no-op
+                    throw new ConfigurationException("Unsupported properties file format: " + format);
             }
         } catch (Exception e) {
-            // ignore, fallback to exception
+            e.printStackTrace();
         }
         throw new ConfigurationException("Unsupported properties file format: " + format);
     }

@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: micronaut-alibaba-nacos-test
+    instance:
+      id: ${random.shortuuid}
+  config-client:
+    enabled: true
+nacos:
+  client:
+    enabled: true
+    host: localhost
+    configuration:
+      enabled: true
+      server-addr: localhost
+      data-id: database
+      type: yaml
