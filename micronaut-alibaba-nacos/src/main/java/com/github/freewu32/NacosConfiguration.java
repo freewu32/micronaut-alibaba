@@ -11,6 +11,7 @@ import io.micronaut.discovery.registration.RegistrationConfiguration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 /**
  * nacos配置属性
@@ -57,8 +58,11 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
         return configuration;
     }
 
+    @Inject
     public void setConfiguration(NacosConfigDiscoveryConfiguration configuration) {
-        this.configuration = configuration;
+        if (configuration != null) {
+            this.configuration = configuration;
+        }
     }
 
     @ConfigurationProperties(DiscoveryConfiguration.PREFIX)
@@ -86,7 +90,7 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
         /**
          * 主配置服务器地址
          */
-        private String serverAddr;
+        private String serverAddr = "localhost";
 
         /**
          * 主配置 data-id

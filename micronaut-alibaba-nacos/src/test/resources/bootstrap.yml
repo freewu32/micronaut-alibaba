@@ -9,7 +9,7 @@ nacos:
   client:
     enabled: true
     host: localhost
-    configuration:
+    config:
       enabled: true
       server-addr: localhost
       data-id: database

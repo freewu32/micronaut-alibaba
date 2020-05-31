@@ -6,6 +6,7 @@ import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.github.freewu32.condition.RequiresNacos;
 import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
  */
 @RequiresNacos
 @Factory
+@BootstrapContextCompatible
 public class NacosFactory {
 
     @Inject
@@ -33,7 +35,7 @@ public class NacosFactory {
     }
 
     @Bean
-    public ConfigService configService() throws NacosException {
+    public ConfigService nacosConfigService() throws NacosException {
         return com.alibaba.nacos.api.NacosFactory
                 .createConfigService(configuration.getConfiguration().getServerAddr());
     }
