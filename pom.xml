@@ -11,6 +11,7 @@
 
     <modules>
         <module>micronaut-alibaba-nacos</module>
+        <module>micronaut-alibaba-seata</module>
     </modules>
 
     <properties>
