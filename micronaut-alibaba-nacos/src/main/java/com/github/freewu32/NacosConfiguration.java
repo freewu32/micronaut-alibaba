@@ -3,13 +3,15 @@ package com.github.freewu32;
 import com.github.freewu32.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.util.Toggleable;
 import io.micronaut.discovery.DiscoveryConfiguration;
 import io.micronaut.discovery.client.DiscoveryClientConfiguration;
-import io.micronaut.discovery.consul.ConsulConfiguration;
+import io.micronaut.discovery.config.ConfigDiscoveryConfiguration;
 import io.micronaut.discovery.registration.RegistrationConfiguration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * nacos配置属性
@@ -27,6 +29,8 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
     private ConnectionPoolConfiguration pool = new ConnectionPoolConfiguration();
 
     private NacosDiscoveryConfiguration discovery = new NacosDiscoveryConfiguration();
+
+    private NacosConfigDiscoveryConfiguration configuration = new NacosConfigDiscoveryConfiguration();
 
     @Nonnull
     @Override
@@ -50,15 +54,108 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
         return pool;
     }
 
+    public NacosConfigDiscoveryConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(NacosConfigDiscoveryConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
     @ConfigurationProperties(DiscoveryConfiguration.PREFIX)
     @BootstrapContextCompatible
-    public class NacosDiscoveryConfiguration extends DiscoveryConfiguration {
-        public static final String PREFIX = ConsulConfiguration.PREFIX + "." + DiscoveryConfiguration.PREFIX;
+    public static class NacosDiscoveryConfiguration extends DiscoveryConfiguration {
+        public static final String PREFIX = NacosConfiguration.PREFIX + "." + DiscoveryConfiguration.PREFIX;
     }
 
     @ConfigurationProperties(RegistrationConfiguration.PREFIX)
     @BootstrapContextCompatible
-    public class NacosRegistrationConfiguration extends RegistrationConfiguration {
-        public static final String PREFIX = ConsulConfiguration.PREFIX + "." + RegistrationConfiguration.PREFIX;
+    public static class NacosRegistrationConfiguration extends RegistrationConfiguration {
+        public static final String PREFIX = NacosConfiguration.PREFIX + "." + RegistrationConfiguration.PREFIX;
+    }
+
+    @ConfigurationProperties(ConfigDiscoveryConfiguration.PREFIX)
+    @BootstrapContextCompatible
+    public static class NacosConfigDiscoveryConfiguration implements Toggleable {
+        public static final String PREFIX = NacosConfiguration.PREFIX + "." + ConfigDiscoveryConfiguration.PREFIX;
+
+        /**
+         * 是否启用
+         */
+        private boolean enabled;
+
+        /**
+         * 主配置服务器地址
+         */
+        private String serverAddr;
+
+        /**
+         * 主配置 data-id
+         */
+        private String dataId;
+
+        /**
+         * 主配置 group-id
+         */
+        private String group = "DEFAULT_GROUP";
+
+        /**
+         * 获取配置的超时时间
+         */
+        private long getConfigTimeout = 5000;
+
+        /**
+         * 主配置 配置文件类型
+         */
+        private String type;
+
+        @Override
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public String getServerAddr() {
+            return serverAddr;
+        }
+
+        public void setServerAddr(String serverAddr) {
+            this.serverAddr = serverAddr;
+        }
+
+        public String getDataId() {
+            return dataId;
+        }
+
+        public void setDataId(String dataId) {
+            this.dataId = dataId;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public void setGroup(String group) {
+            this.group = group;
+        }
+
+        public long getGetConfigTimeout() {
+            return getConfigTimeout;
+        }
+
+        public void setGetConfigTimeout(long getConfigTimeout) {
+            this.getConfigTimeout = getConfigTimeout;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
     }
 }
