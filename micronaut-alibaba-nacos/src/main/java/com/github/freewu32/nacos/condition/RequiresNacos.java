@@ -1,6 +1,6 @@
-package com.github.freewu32.condition;
+package com.github.freewu32.nacos.condition;
 
-import com.github.freewu32.NacosConfiguration;
+import com.github.freewu32.nacos.NacosConfiguration;
 import io.micronaut.context.annotation.Requirements;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;

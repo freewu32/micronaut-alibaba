@@ -1,4 +1,4 @@
-package com.github.freewu32.discovery;
+package com.github.freewu32.nacos.discovery;
 
 import com.alibaba.nacos.api.naming.NamingService;
 import io.micronaut.context.ApplicationContext;

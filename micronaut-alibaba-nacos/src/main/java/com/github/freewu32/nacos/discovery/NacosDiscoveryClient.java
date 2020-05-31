@@ -1,8 +1,8 @@
-package com.github.freewu32.discovery;
+package com.github.freewu32.nacos.discovery;
 
 import com.alibaba.nacos.api.naming.NamingService;
-import com.github.freewu32.NacosConfiguration;
-import com.github.freewu32.condition.RequiresNacos;
+import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.discovery.DiscoveryClient;
 import io.micronaut.discovery.ServiceInstance;
 import io.reactivex.Flowable;

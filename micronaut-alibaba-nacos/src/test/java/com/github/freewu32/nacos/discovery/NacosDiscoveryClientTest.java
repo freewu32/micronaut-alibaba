@@ -1,4 +1,4 @@
-package com.github.freewu32.discovery;
+package com.github.freewu32.nacos.discovery;
 
 import com.google.common.collect.Lists;
 import io.micronaut.context.ApplicationContext;

@@ -1,8 +1,8 @@
-package com.github.freewu32.config;
+package com.github.freewu32.nacos.config;
 
 import com.alibaba.nacos.api.config.ConfigService;
-import com.github.freewu32.NacosConfiguration;
-import com.github.freewu32.condition.RequiresNacos;
+import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.*;
@@ -10,12 +10,10 @@ import io.micronaut.context.env.yaml.YamlPropertySourceLoader;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.discovery.config.ConfigurationClient;
-import io.micronaut.discovery.consul.condition.RequiresConsul;
 import io.micronaut.jackson.env.JsonPropertySourceLoader;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Map;

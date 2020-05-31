@@ -1,6 +1,6 @@
-package com.github.freewu32;
+package com.github.freewu32.nacos;
 
-import com.github.freewu32.condition.RequiresNacos;
+import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.Toggleable;

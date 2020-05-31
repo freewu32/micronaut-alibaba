@@ -1,10 +1,10 @@
-package com.github.freewu32.discovery;
+package com.github.freewu32.nacos.discovery;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
-import com.github.freewu32.NacosConfiguration;
+import com.github.freewu32.nacos.NacosConfiguration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.discovery.ServiceInstance;
 import io.micronaut.discovery.client.registration.DiscoveryServiceAutoRegistration;

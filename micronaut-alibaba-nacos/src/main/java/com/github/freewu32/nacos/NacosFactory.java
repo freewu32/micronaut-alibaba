@@ -1,10 +1,10 @@
-package com.github.freewu32;
+package com.github.freewu32.nacos;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.NamingService;
-import com.github.freewu32.condition.RequiresNacos;
+import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
