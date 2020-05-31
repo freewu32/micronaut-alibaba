@@ -26,7 +26,11 @@ public class SeataHttpServerFilter implements HttpServerFilter {
             return chain.proceed(request);
         } finally {
             if (xid != null) {
-                RootContext.unbind();
+                String unbindXid = RootContext.unbind();
+                // 调用过程有新的事务上下文开启，则不能清除
+                if (!xid.equalsIgnoreCase(unbindXid) && unbindXid != null) {
+                    RootContext.bind(unbindXid);
+                }
             }
         }
     }
