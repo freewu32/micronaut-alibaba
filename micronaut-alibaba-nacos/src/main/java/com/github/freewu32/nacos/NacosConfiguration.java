@@ -112,6 +112,11 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
          */
         private String type;
 
+        /**
+         * 是否开启自动刷新
+         */
+        private boolean autoRefresh = true;
+
         @Override
         public boolean isEnabled() {
             return enabled;
@@ -159,6 +164,14 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public boolean isAutoRefresh() {
+            return autoRefresh;
+        }
+
+        public void setAutoRefresh(boolean autoRefresh) {
+            this.autoRefresh = autoRefresh;
         }
     }
 }
