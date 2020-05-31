@@ -5,11 +5,24 @@
     <parent>
         <artifactId>micronaut-alibaba</artifactId>
         <groupId>com.github.freewu32</groupId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.freewu32.seata</groupId>
     <artifactId>micronaut-alibaba-seata</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-tm</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-rm</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+    </dependencies>
 </project>
