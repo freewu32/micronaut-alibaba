@@ -7,4 +7,14 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 @ConfigurationProperties(SeataConfiguration.PREFIX)
 public class SeataConfiguration {
     public static final String PREFIX = "seata";
+
+    private String resourceGroupId = "DEFAULT";
+
+    public String getResourceGroupId() {
+        return resourceGroupId;
+    }
+
+    public void setResourceGroupId(String resourceGroupId) {
+        this.resourceGroupId = resourceGroupId;
+    }
 }
