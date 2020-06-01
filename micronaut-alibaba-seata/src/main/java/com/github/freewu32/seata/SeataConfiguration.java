@@ -8,7 +8,27 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 public class SeataConfiguration {
     public static final String PREFIX = "seata";
 
+    private String applicationId;
+
+    private String transactionServiceGroup;
+
     private String resourceGroupId = "DEFAULT";
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public String getTransactionServiceGroup() {
+        return transactionServiceGroup;
+    }
+
+    public void setTransactionServiceGroup(String transactionServiceGroup) {
+        this.transactionServiceGroup = transactionServiceGroup;
+    }
 
     public String getResourceGroupId() {
         return resourceGroupId;
