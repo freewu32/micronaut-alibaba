@@ -12,5 +12,11 @@
     <groupId>com.github.freewu32.sentinel</groupId>
     <artifactId>micronaut-alibaba-sentinel</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+            <version>${sentinel.version}</version>
+        </dependency>
+    </dependencies>
 </project>
