@@ -18,6 +18,7 @@
     <modules>
         <module>micronaut-alibaba-nacos</module>
         <module>micronaut-alibaba-seata</module>
+        <module>micronaut-alibaba-sentinel</module>
     </modules>
 
     <properties>
