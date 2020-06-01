@@ -1,4 +1,4 @@
-package com.github.freewu32.seata.Interceptor;
+package com.github.freewu32.seata.interceptor;
 
 import com.github.freewu32.seata.annotation.GlobalTransactional;
 import com.github.freewu32.seata.condition.RequiresSeata;

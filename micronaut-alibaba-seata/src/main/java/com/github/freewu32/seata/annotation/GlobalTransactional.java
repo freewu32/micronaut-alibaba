@@ -1,6 +1,6 @@
 package com.github.freewu32.seata.annotation;
 
-import com.github.freewu32.seata.Interceptor.GlobalTransactionalInterceptor;
+import com.github.freewu32.seata.interceptor.GlobalTransactionalInterceptor;
 import io.micronaut.context.annotation.Type;
 import io.seata.tm.api.transaction.Propagation;
 import io.seata.tm.api.transaction.TransactionInfo;
