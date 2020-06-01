@@ -1,3 +1,4 @@
 /.idea
 /micronaut-alibaba-nacos/target
+/micronaut-alibaba-seata/target
 /*.iml

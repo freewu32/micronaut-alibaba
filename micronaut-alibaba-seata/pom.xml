@@ -24,5 +24,16 @@
             <artifactId>seata-rm</artifactId>
             <version>${seata.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-rm-datasource</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jdbc</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
