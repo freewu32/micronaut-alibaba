@@ -28,6 +28,15 @@
         <sentinel.version>1.7.2</sentinel.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <!--必须与 settings.xml 的 id 一致-->
+            <id>rpg-micronaut-alibaba-snapshot</id>
+            <name>snapshot</name>
+            <url>https://rpg-maven.pkg.coding.net/repository/micronaut-alibaba/snapshot/</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>io.micronaut</groupId>
