@@ -31,22 +31,7 @@ public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
     }
 
     protected void pulsate(ServiceInstance instance, HealthStatus status) {
-        try {
-            namingService.getAllInstances(instance.getId())
-                    .stream()
-                    .filter(v -> v.getInstanceId().equals(instance.getInstanceId().get()))
-                    .findFirst()
-                    .ifPresent(i -> {
-                        try {
-                            i.setHealthy(status == HealthStatus.UP);
-                            namingMaintainService.updateInstance(i.getServiceName(), i);
-                        } catch (NacosException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-        } catch (NacosException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     protected void deregister(ServiceInstance instance) {
