@@ -1,8 +1,5 @@
 package com.github.freewu32.nacos.config;
 
-import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.naming.NamingMaintainService;
-import com.alibaba.nacos.api.naming.NamingService;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.env.Environment;
 import io.micronaut.runtime.Micronaut;
@@ -17,8 +14,6 @@ class NacosConfigurationClientTest {
                 .environments(Environment.TEST).start();
 
         try {
-            context.getBean(ConfigService.class);
-
             int dbPort = context.getEnvironment().get("db.port", Integer.class)
                     .get();
 

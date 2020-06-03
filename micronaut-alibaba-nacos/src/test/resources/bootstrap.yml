@@ -1,14 +1,10 @@
 micronaut:
   application:
     name: micronaut-alibaba-nacos-test
-    instance:
-      id: ${random.shortuuid}
   config-client:
     enabled: true
 nacos:
   client:
-    enabled: true
-    host: localhost
     config:
       enabled: true
       server-addr: localhost

@@ -1,6 +1,7 @@
 package com.github.freewu32.nacos.client;
 
 import io.micronaut.http.annotation.*;
+import io.reactivex.Flowable;
 
 import javax.annotation.Nullable;
 
@@ -10,6 +11,8 @@ public interface NacosOperations {
     String SERVICE_URL = "/v1/ns/service";
 
     String METRICS_URL = "/v1/ns/operator/metrics";
+
+    String CONFIG_URL = "/v1/cs/configs";
 
     //实例接口
 
@@ -127,7 +130,20 @@ public interface NacosOperations {
 
     //配置接口
 
+    /**
+     * 获取Nacos上的配置。
+     */
+    @Get(CONFIG_URL)
+    String getConfigs(@QueryValue("dataId") String dataId,
+                      @QueryValue("group") String group,
+                      @QueryValue("tenant") String tenant);
 
+    /**
+     * 监听 Nacos 上的配置
+     */
+    @Get(CONFIG_URL + "/listener")
+    Flowable<String> listenConfigs(@Header("Long-Pulling-Timeout") int timeout,
+                                   @Body String listeningConfigs);
 
     //健康检查
 

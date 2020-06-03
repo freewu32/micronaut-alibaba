@@ -1,8 +1,7 @@
 package com.github.freewu32.nacos.config;
 
-import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.listener.Listener;
 import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.client.NacosClient;
 import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Requires;
@@ -15,22 +14,18 @@ import io.micronaut.jackson.env.JsonPropertySourceLoader;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
-
-import static io.micronaut.scheduling.TaskExecutors.SCHEDULED;
 
 /**
  * nacos配置加载客户端
  */
 @Singleton
 @RequiresNacos
-@Requires(beans = ConfigService.class)
+@Requires(beans = NacosClient.class)
 @Requires(property = ConfigurationClient.ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.FALSE)
 @BootstrapContextCompatible
 public class NacosConfigurationClient implements ConfigurationClient {
@@ -39,14 +34,13 @@ public class NacosConfigurationClient implements ConfigurationClient {
 
     private NacosConfiguration.NacosConfigDiscoveryConfiguration discoveryConfiguration;
 
-    private ConfigService configService;
+    private NacosClient nacosClient;
 
     public NacosConfigurationClient(NacosConfiguration configuration,
-                                    Environment environment,
-                                    ConfigService configService) {
+                                    NacosClient nacosClient,
+                                    Environment environment) {
         this.discoveryConfiguration = configuration.getConfiguration();
-        this.configService = configService;
-
+        this.nacosClient = nacosClient;
         initLoaders(environment);
     }
 
@@ -69,35 +63,14 @@ public class NacosConfigurationClient implements ConfigurationClient {
             //获取文件类型
             String type = discoveryConfiguration.getType();
             //解析主配置
-            String properties = configService.getConfig(discoveryConfiguration.getDataId(),
-                    discoveryConfiguration.getGroup(), discoveryConfiguration.getGetConfigTimeout());
+            String properties = nacosClient.getConfigs(discoveryConfiguration.getDataId(),
+                    discoveryConfiguration.getGroup(), discoveryConfiguration.getTenant());
             PropertySource propertySource = genSourceForConfigValue(type, properties);
             if (discoveryConfiguration.isAutoRefresh()) {
-                configService.addListener(discoveryConfiguration.getDataId(),
-                        discoveryConfiguration.getGroup(), getListener((DefaultEnvironment) environment, type, propertySource));
+                //TODO 监听配置修改
             }
             return propertySource;
         });
-    }
-
-    /**
-     * 生成自动刷新监听器
-     */
-    private Listener getListener(DefaultEnvironment environment,
-                                 String type,
-                                 PropertySource propertySource) {
-        return new Listener() {
-            @Override
-            public Executor getExecutor() {
-                return null;
-            }
-
-            @Override
-            public void receiveConfigInfo(String configInfo) {
-                environment.removePropertySource(propertySource);
-                environment.addPropertySource(genSourceForConfigValue(type, configInfo));
-            }
-        };
     }
 
     /**

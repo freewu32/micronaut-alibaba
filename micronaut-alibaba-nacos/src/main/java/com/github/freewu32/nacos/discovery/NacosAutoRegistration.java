@@ -1,16 +1,16 @@
 package com.github.freewu32.nacos.discovery;
 
-import com.alibaba.nacos.api.naming.NamingMaintainService;
-import com.alibaba.nacos.api.naming.NamingService;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.client.NacosClient;
 import com.github.freewu32.nacos.client.NacosOperations;
+import com.github.freewu32.nacos.utils.Assert;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.discovery.ServiceInstance;
 import io.micronaut.discovery.client.registration.DiscoveryServiceAutoRegistration;
 import io.micronaut.health.HealthStatus;
-import org.apache.commons.lang3.Validate;
 
 import javax.inject.Singleton;
 
@@ -18,7 +18,7 @@ import javax.inject.Singleton;
  * nacos自动服务注册
  */
 @Singleton
-@Requires(beans = {NamingService.class, NamingMaintainService.class})
+@Requires(beans = {NacosClient.class})
 public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
 
     private NacosOperations nacosClient;
@@ -42,7 +42,7 @@ public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
             String result = nacosClient.sendInstanceBeat(instance.getId(),
                     objectMapper.writeValueAsString(status), registrationConfiguration
                             .getGroupName(), registrationConfiguration.getEphemeral());
-            Validate.isTrue(result.equals("ok"), result);
+            Assert.isTrue(result.equals("ok"), result);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,7 @@ public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
                 registrationConfiguration.getNamespaceId(), registrationConfiguration
                         .getGroupName(), registrationConfiguration.getClusterName(),
                 registrationConfiguration.getEphemeral());
-        Validate.isTrue(result.equals("ok"), result);
+        Assert.isTrue(result.equals("ok"), result);
     }
 
     protected void register(ServiceInstance instance) {
@@ -65,7 +65,7 @@ public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
                             .writeValueAsString(instance.getMetadata().asMap()),
                     registrationConfiguration.getClusterName(), registrationConfiguration
                             .getGroupName(), registrationConfiguration.getEphemeral());
-            Validate.isTrue(result.equals("ok"), result);
+            Assert.isTrue(result.equals("ok"), result);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

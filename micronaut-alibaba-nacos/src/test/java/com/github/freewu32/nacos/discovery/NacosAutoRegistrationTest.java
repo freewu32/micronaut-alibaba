@@ -1,8 +1,7 @@
 package com.github.freewu32.nacos.discovery;
 
-import com.alibaba.nacos.api.naming.NamingService;
+import com.github.freewu32.nacos.client.NacosClient;
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.DefaultApplicationContext;
 import io.micronaut.context.env.Environment;
 import io.micronaut.runtime.Micronaut;
 import org.junit.jupiter.api.Assertions;
@@ -16,12 +15,14 @@ public class NacosAutoRegistrationTest {
                 .environments(Environment.TEST).start();
 
         try {
-            NamingService namingService = context.getBean(NamingService.class);
+            NacosClient namingService = context.getBean(NacosClient.class);
 
             String serviceName = context.getEnvironment().get("micronaut.application.name",
                     String.class).get();
 
-            Assertions.assertEquals(namingService.getAllInstances(serviceName).size(), 1);
+            Assertions.assertEquals(namingService.getInstances(serviceName,
+                    null, null, null, null)
+                    .getHosts().size(), 1);
         } finally {
             context.stop();
         }

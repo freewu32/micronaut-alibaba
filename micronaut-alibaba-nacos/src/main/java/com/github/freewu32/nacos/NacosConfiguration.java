@@ -168,9 +168,9 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
         private String group = "DEFAULT_GROUP";
 
         /**
-         * 获取配置的超时时间
+         * 命名空间
          */
-        private long getConfigTimeout = 5000;
+        private String tenant = "public";
 
         /**
          * 主配置 配置文件类型
@@ -215,12 +215,12 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
             this.group = group;
         }
 
-        public long getGetConfigTimeout() {
-            return getConfigTimeout;
+        public String getTenant() {
+            return tenant;
         }
 
-        public void setGetConfigTimeout(long getConfigTimeout) {
-            this.getConfigTimeout = getConfigTimeout;
+        public void setTenant(String tenant) {
+            this.tenant = tenant;
         }
 
         public String getType() {

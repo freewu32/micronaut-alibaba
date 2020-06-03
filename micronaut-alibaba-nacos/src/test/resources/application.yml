@@ -1,2 +1,9 @@
+micronaut:
+  application:
+    name: micronaut-alibaba-nacos-test
+nacos:
+  client:
+    registration:
+      enabled: true
 db:
   port: 3306
