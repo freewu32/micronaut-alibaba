@@ -29,7 +29,7 @@ class NacosDiscoveryClientTest {
             ServiceInstance instance = Flowable.fromPublisher(discoveryClient
                     .getInstances(serviceName)).blockingSingle().get(0);
 
-            Assertions.assertEquals(instance.getId(), "DEFAULT_GROUP@@" + serviceName);
+            Assertions.assertEquals(instance.getId(), serviceName);
         } finally {
             context.stop();
         }

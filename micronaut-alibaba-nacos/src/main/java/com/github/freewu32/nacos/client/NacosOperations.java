@@ -122,7 +122,7 @@ public interface NacosOperations {
     /**
      * 查询服务列表
      */
-    @Get(SERVICE_URL + "list")
+    @Get(SERVICE_URL + "/list")
     GetServicesResponse getServices(@QueryValue("pageNo") Integer pageNo,
                                     @QueryValue("pageSize") Integer pageSize,
                                     @QueryValue("groupName") @Nullable String groupName,

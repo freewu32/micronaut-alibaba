@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Client(id = NacosConfiguration.ID, path = "/nacos/", configuration = NacosConfiguration.class)
 @Requires(beans = NacosConfiguration.class)
-@BootstrapContextCompatible
+//@BootstrapContextCompatible
 public abstract class NacosClient implements NacosOperations, DiscoveryClient {
     public static final String SERVICE_ID = NacosConfiguration.ID;
 

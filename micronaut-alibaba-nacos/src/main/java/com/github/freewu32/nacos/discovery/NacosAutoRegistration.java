@@ -21,14 +21,14 @@ import javax.inject.Singleton;
 @Requires(beans = {NacosClient.class})
 public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
 
-    private NacosOperations nacosClient;
+    private NacosClient nacosClient;
 
     private NacosConfiguration.NacosRegistrationConfiguration registrationConfiguration;
 
     private ObjectMapper objectMapper;
 
     protected NacosAutoRegistration(NacosConfiguration configuration,
-                                    NacosOperations nacosClient,
+                                    NacosClient nacosClient,
                                     ObjectMapper objectMapper) {
         super(configuration.getRegistration());
         this.nacosClient = nacosClient;
