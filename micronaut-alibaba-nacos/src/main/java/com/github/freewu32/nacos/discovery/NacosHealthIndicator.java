@@ -1,7 +1,7 @@
 package com.github.freewu32.nacos.discovery;
 
 import com.github.freewu32.nacos.NacosConfiguration;
-import com.github.freewu32.nacos.client.NacosClient;
+import com.github.freewu32.nacos.client.AbstractNacosClient;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.health.HealthStatus;
@@ -15,12 +15,12 @@ import javax.inject.Singleton;
 
 @Singleton
 @Requires(classes = HealthIndicator.class)
-@Requires(beans = NacosClient.class)
+@Requires(beans = AbstractNacosClient.class)
 @Requires(property = NacosConfiguration.PREFIX + ".health-check", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 public class NacosHealthIndicator implements HealthIndicator {
 
     @Inject
-    private NacosClient nacosClient;
+    private AbstractNacosClient nacosClient;
 
     @Override
     public Publisher<HealthResult> getResult() {

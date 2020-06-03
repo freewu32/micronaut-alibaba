@@ -1,6 +1,6 @@
 package com.github.freewu32.nacos.discovery;
 
-import com.github.freewu32.nacos.client.NacosClient;
+import com.github.freewu32.nacos.client.AbstractNacosClient;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.env.Environment;
 import io.micronaut.runtime.Micronaut;
@@ -15,7 +15,7 @@ public class NacosAutoRegistrationTest {
                 .environments(Environment.TEST).start();
 
         try {
-            NacosClient namingService = context.getBean(NacosClient.class);
+            AbstractNacosClient namingService = context.getBean(AbstractNacosClient.class);
 
             String serviceName = context.getEnvironment().get("micronaut.application.name",
                     String.class).get();

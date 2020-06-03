@@ -4,8 +4,7 @@ package com.github.freewu32.nacos.discovery;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.freewu32.nacos.NacosConfiguration;
-import com.github.freewu32.nacos.client.NacosClient;
-import com.github.freewu32.nacos.client.NacosOperations;
+import com.github.freewu32.nacos.client.AbstractNacosClient;
 import com.github.freewu32.nacos.utils.Assert;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.discovery.ServiceInstance;
@@ -18,17 +17,17 @@ import javax.inject.Singleton;
  * nacos自动服务注册
  */
 @Singleton
-@Requires(beans = {NacosClient.class})
+@Requires(beans = {AbstractNacosClient.class})
 public class NacosAutoRegistration extends DiscoveryServiceAutoRegistration {
 
-    private NacosClient nacosClient;
+    private AbstractNacosClient nacosClient;
 
     private NacosConfiguration.NacosRegistrationConfiguration registrationConfiguration;
 
     private ObjectMapper objectMapper;
 
     protected NacosAutoRegistration(NacosConfiguration configuration,
-                                    NacosClient nacosClient,
+                                    AbstractNacosClient nacosClient,
                                     ObjectMapper objectMapper) {
         super(configuration.getRegistration());
         this.nacosClient = nacosClient;

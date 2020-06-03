@@ -1,6 +1,7 @@
 package com.github.freewu32.nacos.config;
 
 import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.client.AbstractNacosClient;
 import com.github.freewu32.nacos.client.NacosClient;
 import com.github.freewu32.nacos.condition.RequiresNacos;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Singleton
 @RequiresNacos
-@Requires(beans = NacosClient.class)
+@Requires(beans = AbstractNacosClient.class)
 @Requires(property = ConfigurationClient.ENABLED, value = StringUtils.TRUE, defaultValue = StringUtils.FALSE)
 @BootstrapContextCompatible
 public class NacosConfigurationClient implements ConfigurationClient {
