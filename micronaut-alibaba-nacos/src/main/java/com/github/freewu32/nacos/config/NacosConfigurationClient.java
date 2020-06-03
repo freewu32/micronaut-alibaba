@@ -41,15 +41,11 @@ public class NacosConfigurationClient implements ConfigurationClient {
 
     private ConfigService configService;
 
-    private Executor executor;
-
     public NacosConfigurationClient(NacosConfiguration configuration,
                                     Environment environment,
-                                    ConfigService configService,
-                                    @Named(SCHEDULED) Executor executor) {
+                                    ConfigService configService) {
         this.discoveryConfiguration = configuration.getConfiguration();
         this.configService = configService;
-        this.executor = executor;
 
         initLoaders(environment);
     }
@@ -93,7 +89,7 @@ public class NacosConfigurationClient implements ConfigurationClient {
         return new Listener() {
             @Override
             public Executor getExecutor() {
-                return executor;
+                return null;
             }
 
             @Override

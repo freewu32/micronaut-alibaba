@@ -12,6 +12,7 @@ import io.micronaut.discovery.registration.RegistrationConfiguration;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.util.Map;
 
 /**
  * nacos配置属性
@@ -31,6 +32,10 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
     private NacosDiscoveryConfiguration discovery = new NacosDiscoveryConfiguration();
 
     private NacosConfigDiscoveryConfiguration configuration = new NacosConfigDiscoveryConfiguration();
+
+    public NacosConfiguration() {
+        setPort(8848);
+    }
 
     @Nonnull
     @Override
@@ -75,6 +80,66 @@ public class NacosConfiguration extends DiscoveryClientConfiguration {
     @BootstrapContextCompatible
     public static class NacosRegistrationConfiguration extends RegistrationConfiguration {
         public static final String PREFIX = NacosConfiguration.PREFIX + "." + RegistrationConfiguration.PREFIX;
+
+        private String namespaceId = "public";
+
+        private Double weight = 1.0;
+
+        private Map<String, String> metadata;
+
+        private String clusterName;
+
+        private String groupName = "DEFAULT_GROUP";
+
+        private Boolean ephemeral = Boolean.TRUE;
+
+        public String getNamespaceId() {
+            return namespaceId;
+        }
+
+        public void setNamespaceId(String namespaceId) {
+            this.namespaceId = namespaceId;
+        }
+
+        public Double getWeight() {
+            return weight;
+        }
+
+        public void setWeight(Double weight) {
+            this.weight = weight;
+        }
+
+        public Map<String, String> getMetadata() {
+            return metadata;
+        }
+
+        public void setMetadata(Map<String, String> metadata) {
+            this.metadata = metadata;
+        }
+
+        public String getClusterName() {
+            return clusterName;
+        }
+
+        public void setClusterName(String clusterName) {
+            this.clusterName = clusterName;
+        }
+
+        public String getGroupName() {
+            return groupName;
+        }
+
+        public void setGroupName(String groupName) {
+            this.groupName = groupName;
+        }
+
+        public Boolean getEphemeral() {
+            return ephemeral;
+        }
+
+        public void setEphemeral(Boolean ephemeral) {
+            this.ephemeral = ephemeral;
+        }
     }
 
     @ConfigurationProperties(ConfigDiscoveryConfiguration.PREFIX)
