@@ -125,10 +125,15 @@ public interface NacosOperations {
                                     @QueryValue("groupName") @Nullable String groupName,
                                     @QueryValue("namespaceId") @Nullable String namespaceId);
 
+    //配置接口
+
+
+
     //健康检查
 
     /**
      * 查看系统当前数据指标
      */
+    @Get(METRICS_URL)
     GetMetricsResponse getMetrics();
 }
