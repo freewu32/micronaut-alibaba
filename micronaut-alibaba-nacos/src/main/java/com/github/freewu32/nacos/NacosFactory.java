@@ -23,18 +23,6 @@ public class NacosFactory {
     private NacosConfiguration configuration;
 
     @Bean
-    public NamingService namingService() throws NacosException {
-        return com.alibaba.nacos.api.NacosFactory
-                .createNamingService(configuration.getHost());
-    }
-
-    @Bean
-    public NamingMaintainService namingMaintainService() throws NacosException {
-        return com.alibaba.nacos.api.NacosFactory
-                .createMaintainService(configuration.getHost());
-    }
-
-    @Bean
     public ConfigService nacosConfigService() throws NacosException {
         return com.alibaba.nacos.api.NacosFactory
                 .createConfigService(configuration.getConfiguration().getServerAddr());

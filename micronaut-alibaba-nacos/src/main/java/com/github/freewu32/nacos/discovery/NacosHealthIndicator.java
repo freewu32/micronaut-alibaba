@@ -1,7 +1,7 @@
 package com.github.freewu32.nacos.discovery;
 
-import com.alibaba.nacos.api.naming.NamingService;
 import com.github.freewu32.nacos.NacosConfiguration;
+import com.github.freewu32.nacos.client.NacosClient;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.health.HealthStatus;
@@ -15,16 +15,16 @@ import javax.inject.Singleton;
 
 @Singleton
 @Requires(classes = HealthIndicator.class)
-@Requires(beans = NamingService.class)
+@Requires(beans = NacosClient.class)
 @Requires(property = NacosConfiguration.PREFIX + ".health-check", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 public class NacosHealthIndicator implements HealthIndicator {
 
     @Inject
-    private NamingService namingService;
+    private NacosClient nacosClient;
 
     @Override
     public Publisher<HealthResult> getResult() {
-        return Flowable.just(namingService.getServerStatus()).map(v -> {
+        return Flowable.just(nacosClient.getMetrics().getStatus()).map(v -> {
             HealthStatus status = v.equals("UP") ? HealthStatus.UP : HealthStatus.DOWN;
             return HealthResult.builder(NacosConfiguration.ID).details(v)
                     .status(status).build();

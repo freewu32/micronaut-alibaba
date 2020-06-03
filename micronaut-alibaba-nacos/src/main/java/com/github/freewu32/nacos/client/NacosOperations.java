@@ -9,6 +9,8 @@ public interface NacosOperations {
 
     String SERVICE_URL = "/v1/ns/service";
 
+    String METRICS_URL = "/v1/ns/operator/metrics";
+
     //实例接口
 
     /**
@@ -122,4 +124,11 @@ public interface NacosOperations {
                                     @QueryValue("pageSize") Integer pageSize,
                                     @QueryValue("groupName") @Nullable String groupName,
                                     @QueryValue("namespaceId") @Nullable String namespaceId);
+
+    //健康检查
+
+    /**
+     * 查看系统当前数据指标
+     */
+    GetMetricsResponse getMetrics();
 }
