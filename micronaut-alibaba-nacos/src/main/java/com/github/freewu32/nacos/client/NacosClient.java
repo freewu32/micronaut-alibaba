@@ -11,8 +11,10 @@ import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Client(id = NacosConfiguration.ID, path = "/nacos/", configuration = NacosConfiguration.class)
 @Requires(beans = NacosConfiguration.class)
@@ -45,12 +47,32 @@ public abstract class NacosClient implements NacosOperations, DiscoveryClient {
                             nacosConfiguration.getHost(),
                             nacosConfiguration.getPort()))
             );
+        } else {
+            return Flowable.fromCallable(() -> {
+                NacosConfiguration.NacosRegistrationConfiguration registration =
+                        (NacosConfiguration.NacosRegistrationConfiguration) nacosConfiguration
+                                .getRegistration();
+                GetInstancesResponse response = getInstances(serviceId, registration.getGroupName(), registration.getNamespaceId(),
+                        registration.getClusterName(), registration.getEphemeral());
+
+                return response.getHosts().stream().map(v -> {
+                    return ServiceInstance.builder(serviceId, URI.create("http://" + v.getIp() + ":" + v.getPort()))
+                            .instanceId(v.getInstanceId())
+                            .metadata(v.getMetadata())
+                            .build();
+                }).collect(Collectors.toList());
+            });
         }
-        return Flowable.empty();
     }
 
     @Override
     public Publisher<List<String>> getServiceIds() {
-        return Flowable.empty();
+        return Flowable.fromCallable(() -> {
+            NacosConfiguration.NacosRegistrationConfiguration registration =
+                    (NacosConfiguration.NacosRegistrationConfiguration) nacosConfiguration
+                            .getRegistration();
+            return getServices(1, Integer.MAX_VALUE, registration.getGroupName(),
+                    registration.getNamespaceId()).getDoms();
+        });
     }
 }
