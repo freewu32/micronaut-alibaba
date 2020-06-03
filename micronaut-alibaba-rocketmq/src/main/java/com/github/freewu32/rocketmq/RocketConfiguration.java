@@ -2,7 +2,7 @@ package com.github.freewu32.rocketmq;
 
 import com.github.freewu32.rocketmq.condition.RequiresRocket;
 import io.micronaut.context.annotation.ConfigurationProperties;
-import org.apache.rocketmq.client.consumer.AllocateMessageQueueStrategy;
+import org.apache.rocketmq.client.ClientConfig;
 import org.apache.rocketmq.common.MixAll;
 
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class RocketConfiguration {
     }
 
     @ConfigurationProperties(ProducerConfiguration.PREFIX)
-    public static class ProducerConfiguration {
+    public static class ProducerConfiguration extends ClientConfig {
         public static final String PREFIX = "producer";
 
         private String namespace;
@@ -90,7 +90,7 @@ public class RocketConfiguration {
     }
 
     @ConfigurationProperties(ConsumerConfiguration.PREFIX)
-    public static class ConsumerConfiguration {
+    public static class ConsumerConfiguration extends ClientConfig{
         public static final String PREFIX = "consumer";
 
         private String namespace;

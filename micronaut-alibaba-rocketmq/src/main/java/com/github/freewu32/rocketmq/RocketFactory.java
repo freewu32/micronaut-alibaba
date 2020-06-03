@@ -33,9 +33,13 @@ public class RocketFactory {
                 .getProducer();
         Optional<RPCHook> rpcHook = (Optional<RPCHook>) this.context.findBean(Class.forName(producerConfiguration
                 .getRpcHookClassName()));
-        return new DefaultMQProducer(producerConfiguration.getNamespace(),
+        DefaultMQProducer producer = new DefaultMQProducer(producerConfiguration.getNamespace(),
                 producerConfiguration.getProducerGroup(), rpcHook.orElse(null),
-                producerConfiguration.isEnableMsgTrace(), producerConfiguration.getCustomizedTraceTopic());
+                producerConfiguration.isEnableMsgTrace(),
+                producerConfiguration.getCustomizedTraceTopic());
+        producer.resetClientConfig(producerConfiguration);
+        producer.start();
+        return producer;
     }
 
     @Bean(preDestroy = "shutdown")
@@ -45,9 +49,12 @@ public class RocketFactory {
                 .getConsumer();
         Optional<RPCHook> rpcHook = (Optional<RPCHook>) this.context.findBean(Class.forName(consumerConfiguration
                 .getRpcHookClassName()));
-        return new DefaultMQPushConsumer(consumerConfiguration.getNamespace(),
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerConfiguration.getNamespace(),
                 consumerConfiguration.getConsumerGroup(), rpcHook.orElse(null),
                 allocateMessageQueueStrategy, consumerConfiguration.isEnableMsgTrace(),
                 consumerConfiguration.getCustomizedTraceTopic());
+        consumer.resetClientConfig(consumerConfiguration);
+        consumer.start();
+        return consumer;
     }
 }
